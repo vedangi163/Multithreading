@@ -1,8 +1,11 @@
 package ThreadExamples;
 
+
+//race condition - when multiple threads trues to access shared resource then it leads to incorrect state called race condition
+//mutual exclusion - a technique where shared resource is accessed by only one thread at a time
 public class SynchronizedDemo {
     public static void main(String[] args) throws InterruptedException {
-        Counter counter = new Counter();
+        Counter counter = new Counter();   // a shared resource accessed by 2 threads,
         Test t1 = new Test(counter);
         Test t2 = new Test(counter);
 
