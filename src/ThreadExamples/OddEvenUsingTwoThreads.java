@@ -9,7 +9,7 @@ package ThreadExamples;
 //Inter thread communication
 public class OddEvenUsingTwoThreads {
     public static void main(String[] args) {
-        Count count = new Count();
+        Resourse count = new Resourse();
 
         OddThread t1 = new OddThread(count);
         EvenThread t2 = new EvenThread(count);
@@ -19,11 +19,10 @@ public class OddEvenUsingTwoThreads {
     }
 }
 
-class Count {
+class Resourse {
     int counter = 1;       //here, counter is a shared resource
-
-    public void printOdd()  {
-        while (counter<=10){
+    public synchronized void printOdd()  {
+        while (counter<=10) {
             if(counter%2 == 0) {
                 try {
                     wait();                 //since no is not odd so we will say that OddThread plz wait for sometime & let EvenThread print the even no
@@ -37,7 +36,7 @@ class Count {
         }
     }
 
-    public void printEven() {
+    public synchronized void printEven() {
         while (counter<=10){
             if (counter%2 == 1) {
                 try {
@@ -55,28 +54,30 @@ class Count {
 }
 
 class OddThread extends Thread{
-    Count test;
+    Resourse resourse;
 
-    OddThread(Count test) {
-        this.test = test;
+    OddThread(Resourse test) {
+        this.resourse = test;
     }
     public void run() {
-        synchronized (test) {
-            test.printOdd();
-        }
+//        synchronized (test) {
+            resourse.printOdd();
+//        }
 
     }
 }
 
 class EvenThread extends Thread{
-    Count test;
+    Resourse resourse;
 
-    EvenThread(Count test) {
-        this.test = test;
+    EvenThread(Resourse test) {
+        this.resourse = test;
     }
     public void run(){
-        synchronized (test) {
-            test.printEven();
-        }
+//        synchronized (test) {
+        resourse.printEven();
+//        }
     }
 }
+
+
